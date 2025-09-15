@@ -1,0 +1,41 @@
+# Virtual environment
+venv/
+venv*/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*__pycache__/
+*.cpython-*.pyc
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# Database files
+*.sqlite3
+db.sqlite3
+
+# Log files
+*.log
+
+# Shared libraries
+*.so
+*.dll
+*.dylib
+
+# Environment variables
+.env
+.flaskenv
+
+# Temporary and build files
+tmp/
+dist/
+build/
+*.egg-info/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
