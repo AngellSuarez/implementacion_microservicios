@@ -172,7 +172,7 @@ LOGGING = {
     },
 }
 
-MONOLITH_URL = 'http://localhost:8000/api'
+MONOLITH_URL = os.getenv('MONOLITH_URL', 'http://localhost:8000/api')
 
 
 # Password validation

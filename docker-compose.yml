@@ -5,7 +5,54 @@ services:
     build:
       context: ./api_monolitica
       dockerfile: dockerfile
-    container_name: candysoft api_monolitica
+    container_name: candysoft_api_monolitica
     restart: always
     command: >
-      sh -c "python manage.py migrate && "
+      sh -c "python manage.py migrate &&
+             gunicorn --bind 0.0.0.0:8000 --workers 3 api_monolitica.wsgi:application"
+    volumes:
+      - ./api_monolitica:/api-monolitica
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Map generic DB vars to monolith-specific vars from .env
+      - DB_HOST=${MONOLITH_DB_HOST}
+      - DB_NAME=${MONOLITH_DB_NAME}
+      - DB_USER=${MONOLITH_DB_USER}
+      - DB_PASSWORD=${MONOLITH_DB_PASSWORD}
+      - DB_PORT=${MONOLITH_DB_PORT}
+      - DB_ENGINE=${MONOLITH_DB_ENGINE}
+      - SECRET_KEY=${MONOLITH_SECRET_KEY}
+      - DEBUG=${DEBUG}
+
+  microservicio_servicios:
+    build:
+      context: ./microservicio_servicios
+      dockerfile: dockerfile
+    container_name: candysoft_microservicio_servicios
+    restart: always
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn --bind 0.0.0.0:8001 --workers 3 microservicio_servicios.wsgi:application"
+    volumes:
+      - ./microservicio_servicios:/microservicio_servicios
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    environment:
+      # Map generic DB vars to microservice-specific vars from .env
+      - DB_HOST=${MICROSERVICE_DB_HOST}
+      - DB_NAME=${MICROSERVICE_DB_NAME}
+      - DB_USER=${MICROSERVICE_DB_USER}
+      - DB_PASSWORD=${MICROSERVICE_DB_PASSWORD}
+      - DB_PORT=${MICROSERVICE_DB_PORT}
+      - DB_ENGINE=${MICROSERVICE_DB_ENGINE}
+      - SECRET_KEY=${MICROSERVICE_SECRET_KEY}
+      - DEBUG=${DEBUG}
+      # This allows the microservice to call the monolith by its service name
+      - MONOLITH_URL=http://api_monolitica:8000/api
+    depends_on:
+      - api_monolitica
