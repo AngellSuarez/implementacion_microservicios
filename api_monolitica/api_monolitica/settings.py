@@ -142,7 +142,16 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-AUTH_USER_MODEL = 'usuario.Usuario'  #
+AUTH_USER_MODEL = 'usuario.Usuario' 
+
+# En settings.py
+REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
+}
 
 
 # Password validation

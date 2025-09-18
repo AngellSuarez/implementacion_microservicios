@@ -81,14 +81,13 @@ class ServicioCitaViewSet(viewsets.ModelViewSet):
                         "cliente": cliente,
                         "servicios": []
                     }
-                
-                # Aquí también necesitarás el nombre del servicio, lo ideal es que lo traigas en la misma
+            
                 # petición HTTP al microservicio de servicios o lo pases desde el frontend
                 servicios_a_crear_dict = {s['servicio_id']: s for s in servicios_a_crear}
                 servicio_data = servicios_a_crear_dict.get(item.servicio_id.id)
                 
                 citas_servicios[cita.id]["servicios"].append({
-                    "nombre":servicio_data.nombre,
+                    "nombre":item.nombre,
                     "subtotal": item.subtotal
                 })
             
@@ -146,8 +145,6 @@ class ServicioCitaViewSet(viewsets.ModelViewSet):
 
             # Usar Q object para manejar la consulta de estado de forma segura
             query = Q(cita_id__Fecha__gte=inicio_mes) & Q(cita_id__Fecha__lte=hoy)
-            # Asumiendo que el estado 'Terminada' tiene un ID conocido. 
-            # Si no, se puede obtener con una sola consulta al inicio del viewset.
             query &= Q(cita_id__estado_id__Estado='Terminada') 
             
             servicios_vendidos = (

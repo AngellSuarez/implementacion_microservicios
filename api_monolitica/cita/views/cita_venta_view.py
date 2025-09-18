@@ -17,7 +17,7 @@ from ..serializers.cita_venta_serializer import CitaVentaSerializer
 from usuario.models.cliente_model import Cliente
 from usuario.models.manicurista_model import Manicurista
 
-from manicurista.models.novedades import Novedades
+from manicurista.models.novedades_model import Novedades
 
 from utils.email_utils import enviar_correo_confirmacion
 from utils.permisos import TienePermisoModulo

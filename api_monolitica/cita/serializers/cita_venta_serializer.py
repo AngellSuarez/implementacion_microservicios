@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from usuario.models.manicurista_model import Manicurista
 from usuario.models.cliente_model import Cliente
-from manicurista.models.novedades import Novedades
+from manicurista.models.novedades_model import Novedades
 from ..models.cita_venta_model import CitaVenta
 from ..models.estado_cita_model import EstadoCita
 from ..models.servicio_cita_model import ServicioCita

@@ -1,0 +1,3 @@
+from .permiso_rol_serializer import PermisoRolSerializer
+from .permiso_serializer import PermisoSerializer
+from .rol_serializer import RolSerializer

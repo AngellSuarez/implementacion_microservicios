@@ -1,7 +1,7 @@
 from django.db import models
-from ..models.usuario_model import Usuario;
+from .usuario_model import Usuario;
 
-class Manicurista(models.Model):
+class Cliente(models.Model):
     ESTADOS_CHOICES = (
         ("Activo", "Activo"),
         ("Inactivo", "Inactivo"),
@@ -25,15 +25,13 @@ class Manicurista(models.Model):
     
     numero_documento = models.CharField(max_length=15, unique=True, null=False)
     
-    correo = models.EmailField(max_length=60, unique=True, null=False)
+    correo = models.EmailField(max_length=40, unique=True, null=False)
     
-    celular = models.CharField(max_length=13, unique=True, null=False)
+    celular = models.CharField(max_length=13, blank=True, null=True)
     
     estado = models.CharField(max_length=8, choices=ESTADOS_CHOICES, default="Activo")
-    
-    fecha_nacimiento = models.DateField(null=False)
-    
-    fecha_contratacion = models.DateField(null=False)
 
     def __str__(self):
         return f"{self.nombre} - {self.apellido} - {self.correo} - ({self.estado})"
+
+
