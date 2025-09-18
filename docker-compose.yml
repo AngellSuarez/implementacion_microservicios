@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  api_monolitica:
+    build:
+      context: ./api_monolitica
+      dockerfile: dockerfile
+    container_name: candysoft api_monolitica
+    restart: always
+    command: >
+      sh -c "python manage.py migrate && "

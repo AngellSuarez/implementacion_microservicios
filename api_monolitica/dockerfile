@@ -1,0 +1,32 @@
+# Imagen más estable que alpine
+FROM python:3.11-slim
+
+# Crear directorio
+WORKDIR /api-monolitica
+
+# Variables de entorno
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Instalar dependencias del sistema (para mysqlclient y Pillow)
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libmariadb-dev-compat \
+    libmariadb-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar dependencias
+COPY requirements.txt .
+
+# Instalar dependencias Python
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código
+COPY . .
+
+# Exponer puerto
+EXPOSE 8000
+
+# Iniciar con gunicorn
+CMD ["gunicorn","--bind","0.0.0.0:8000","--workers","3","api_monolitica.wsgi:application"]
