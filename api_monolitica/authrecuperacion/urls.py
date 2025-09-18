@@ -3,11 +3,12 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 
 
-from .views.auth import LoginView, LogoutView, user_info, RegistroClienteView
+from .views.auth import LoginView, LogoutView, user_info, RegistroClienteView, verify_token
 
 from .views.solicitar_codigo import SolicitarCodigoRecuperacionView
 from .views.confirmar_codigo import ConfirmarCodigoRecuperacionView
 from .views.cambiar import cambiar_password  
+from . import views
 
 
 
@@ -25,4 +26,5 @@ urlpatterns = [
     path('password/reset-request/',SolicitarCodigoRecuperacionView.as_view(),name='reset_request'),
     path('password/reset-confirm/',ConfirmarCodigoRecuperacionView.as_view(),name='reset_confirm'),
     path('password/cambiar/', cambiar_password, name='cambiar_password'),
+    path('verify-token/', verify_token, name='verify_token'),
 ]

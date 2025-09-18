@@ -1,24 +1,16 @@
+# microservicio_servicios/servicios/views.py
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from .models import Servicio
 from .serializer import ServicioSerializer
-from utils.permisos import TienePermisoModulo
-
-from rest_framework import permissions
-
 
 class ServicioViewSet(viewsets.ModelViewSet):
     queryset = Servicio.objects.all()
     serializer_class = ServicioSerializer
-
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated(), TienePermisoModulo("Servicio")]
-
+    permission_classes = [AllowAny]  # Sin autenticación requerida
 
     def destroy(self, request, *args, **kwargs):
         try:

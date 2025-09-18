@@ -6,7 +6,7 @@ import requests;
 # from servicio.models import Servicio 
 from ..models.cita_venta_model import CitaVenta
 from ..models.servicio_cita_model import ServicioCita
-SERVICIO_MS_URL = "http://localhost:8001/api/servicios/"
+SERVICIO_MS_URL = "http://127.0.0.1:8001/micro-servicios/servicio/"
 
 class ServicioCitaSerializer(serializers.ModelSerializer):
     servicio_nombre = serializers.CharField(source='servicio_id.nombre', read_only=True)
@@ -23,7 +23,7 @@ class ServicioCitaSerializer(serializers.ModelSerializer):
 
     def validate_servicio_id(self, servicio_id):
         try:
-            response = requests.get(f"{SERVICIO_MS_URL}{servicio_id.id}/")
+            response = requests.get(f"{SERVICIO_MS_URL}{servicio_id}/")
             if response.status_code != 200:
                 raise serializers.ValidationError("El servicio no existe o no está disponible.")
             servicio_data = response.json()

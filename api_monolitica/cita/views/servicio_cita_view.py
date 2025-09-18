@@ -30,8 +30,10 @@ class ServicioCitaViewSet(viewsets.ModelViewSet):
         """Función auxiliar para obtener el precio de un servicio desde su API."""
         try:
             # URL del microservicio de servicios
-            url = f"{settings.SERVICIO_MS_URL}/api/servicios/{servicio_id}/"
+            url = f"http://127.0.0.1:8001/micro-servicios/servicio/{servicio_id}/"
             response = requests.get(url)
+            print(response)
+            print(url)
             response.raise_for_status() # Lanza un error para códigos de estado
             return response.json().get('precio')
         except requests.exceptions.RequestException:
@@ -83,8 +85,8 @@ class ServicioCitaViewSet(viewsets.ModelViewSet):
                     }
             
                 # petición HTTP al microservicio de servicios o lo pases desde el frontend
-                servicios_a_crear_dict = {s['servicio_id']: s for s in servicios_a_crear}
-                servicio_data = servicios_a_crear_dict.get(item.servicio_id.id)
+                servicios_a_crear_dict = {s['servicio_id']: s for s in servicios_a_crear}   
+                servicio_data = servicios_a_crear_dict.get(item.servicio_id)
                 
                 citas_servicios[cita.id]["servicios"].append({
                     "nombre":item.nombre,

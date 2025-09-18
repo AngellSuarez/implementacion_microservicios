@@ -157,3 +157,26 @@ def user_info(request):
         base_data['perfil'] = {'error': str(e)}
 
     return Response(base_data)
+
+@api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
+def verify_token(request):
+    """Endpoint para verificar tokens JWT y obtener datos del usuario"""
+    try:
+        user = request.user
+        serializer = UsuarioSerializer(user)
+        
+        return Response({
+            'valid': True,
+            'user': serializer.data,
+            'user_id': user.id,
+            'username': user.username,
+            'rol_id': user.rol_id.id if user.rol_id else None,
+            'estado': user.estado
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response({
+            'valid': False,
+            'error': str(e)
+        }, status=status.HTTP_401_UNAUTHORIZED)
