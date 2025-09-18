@@ -23,5 +23,11 @@ urlpatterns = [
     path('api/usuario/',include('usuario.urls')),
     path('api/cita-venta/',include("cita.urls")),
     path('api/manicurista/',include("manicurista.urls")),
-    path('api/auth/',include('authrecuperacion.urls'))
+    path('api/auth/',include('authrecuperacion.urls')),
+    path('api/calificacion/', include('calificacion.urls')),
+    path('api/proveedor/', include("proveedor.urls")),
+    path('api/insumo/', include("insumo.urls")),
+    path("api/compra/", include("compra.urls")),
+    path("api/abastecimiento/", include("abastecimiento.urls")),
+    
 ]
