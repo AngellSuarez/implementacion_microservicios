@@ -11,9 +11,9 @@ ENV PYTHONUNBUFFERED=1
 # Instalar dependencias del sistema (para mysqlclient y Pillow)
 RUN apt-get update && apt-get install -y \
     gcc \
+    pkg-config \
+    default-libmysqlclient-dev \
     libmariadb-dev-compat \
-    libmariadb-dev \
-    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copiar dependencias
